@@ -1,54 +1,103 @@
-import { cn } from '@/lib/utils';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { styled } from '@/config/stitches.config';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
-  size?: 'sm' | 'md' | 'lg';
-  isLoading?: boolean;
-}
+/**
+ * @component Button
+ * @design-system Stitch
+ * @domain ui
+ *
+ * 기본 버튼 컴포넌트 - 재사용 가능한 UI 요소
+ * DESIGN_SYSTEM.md 규칙 준수
+ */
+export const Button = styled('button', {
+  // Reset & Base
+  all: 'unset',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  boxSizing: 'border-box',
+  cursor: 'pointer',
+  userSelect: 'none',
+  fontFamily: '$sans',
+  fontWeight: '$medium',
+  borderRadius: '$md',
+  transition: 'all $fast',
 
-const variantClasses = {
-  primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-  secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500',
-  outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500',
-  ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
-  destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-};
-
-const sizeClasses = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-sm',
-  lg: 'px-6 py-3 text-base',
-};
-
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', isLoading, disabled, children, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        disabled={disabled || isLoading}
-        className={cn(
-          'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-          variantClasses[variant],
-          sizeClasses[size],
-          className,
-        )}
-        {...props}
-      >
-        {isLoading && (
-          <svg className="mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-            />
-          </svg>
-        )}
-        {children}
-      </button>
-    );
+  // Disabled state
+  '&:disabled': {
+    opacity: 0.5,
+    cursor: 'not-allowed',
   },
-);
 
-Button.displayName = 'Button';
+  // Focus state
+  '&:focus-visible': {
+    outline: '2px solid $primary',
+    outlineOffset: '2px',
+  },
+
+  variants: {
+    variant: {
+      primary: {
+        backgroundColor: '$primary',
+        color: 'white',
+        '&:hover:not(:disabled)': {
+          backgroundColor: '$primaryHover',
+        },
+      },
+      secondary: {
+        backgroundColor: '$neutral200',
+        color: '$neutral900',
+        '&:hover:not(:disabled)': {
+          backgroundColor: '$neutral300',
+        },
+      },
+      outline: {
+        backgroundColor: 'transparent',
+        color: '$primary',
+        border: '1px solid $primary',
+        '&:hover:not(:disabled)': {
+          backgroundColor: '$primaryLight',
+        },
+      },
+      ghost: {
+        backgroundColor: 'transparent',
+        color: '$neutral700',
+        '&:hover:not(:disabled)': {
+          backgroundColor: '$neutral100',
+        },
+      },
+    },
+    size: {
+      sm: {
+        px: '$3',
+        py: '$2',
+        fontSize: '$sm',
+        gap: '$2',
+      },
+      md: {
+        px: '$4',
+        py: '$3',
+        fontSize: '$base',
+        gap: '$2',
+      },
+      lg: {
+        px: '$6',
+        py: '$4',
+        fontSize: '$lg',
+        gap: '$3',
+      },
+    },
+    fullWidth: {
+      true: {
+        width: '100%',
+      },
+    },
+  },
+
+  defaultVariants: {
+    variant: 'primary',
+    size: 'md',
+  },
+});
+
+// Type export for TypeScript
+export type ButtonProps = React.ComponentProps<typeof Button>;

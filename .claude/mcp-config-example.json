@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "stitch": {
+      "command": "npx",
+      "args": ["@_davideast/stitch-mcp", "proxy"],
+      "env": {
+        "STITCH_PROJECT_ID": "13221876373502805634"
+      },
+      "description": "Google Stitch 디자인 시스템 (실시간 동기화, 우선순위 높음)"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/haeyoung/kmtls/nextgen/src", "/Users/haeyoung/kmtls/nextgen/docs"],
+      "description": "프로젝트 파일시스템 접근 (src와 docs만)"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>"
+      },
+      "description": "GitHub 이슈/PR 관리 (선택적 사용)"
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost/dbname"],
+      "description": "DB 스키마 참조 (필요시만 활성화)"
+    }
+  }
+}
